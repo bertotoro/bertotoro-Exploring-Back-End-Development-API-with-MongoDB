@@ -1,9 +1,11 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const UserModel = require('./user')
+const UserModel = require('./User')
+var cors = require('cors')
 
 const app = express()
-const port = 3000
+const port = 3001
+app.use(cors())
 
 app.use(express.json())
 
@@ -39,8 +41,9 @@ app.put('/update/:id', (req, res) => {
   const id = req.params.id;
   UserModel.findByIdAndUpdate({ _id: id }, {
     name: req.body.name,
+    age: req.body.age,
     email: req.body.email,
-    age: req.body.age
+    pass: req.body.pass
   }).then(user => res.json(user))
     .catch(err => res.json(err))
 })
